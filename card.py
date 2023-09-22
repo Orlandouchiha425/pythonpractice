@@ -23,3 +23,39 @@ two_hearts = Card('Hearts', "Two")
 # print(values[two_hearts.rank])
 
 print(two_hearts.value < three_of_clubs.value)
+
+
+class Deck():
+    def __init__(self):
+        self.all_cards = []
+#this is just a forloop it goes through every suits and ranks and then combines them
+#note: there wont be repeating because is just a for loop
+        for suit in suits:
+            for rank in ranks:
+                #create card object
+                created_card = Card(suit,rank)
+                self.all_cards.append(created_card)
+
+    def shuffle(self):
+        random.shuffle(self.all_cards)
+
+    def deal_one(self):
+        return self.all_cards.pop()
+
+
+
+new_deck = Deck()
+new_deck.shuffle()
+mycard = new_deck.deal_one()
+print(mycard)
+print(len(new_deck.all_cards))
+#this will print all cards in object memory ex: 
+# <__main__.Card object at 0x100ffe350>,
+#lets test it, 
+# first_card = new_deck.all_cards[0]
+# bottom_card = new_deck.all_cards[-1]
+# new_deck.shuffle()
+# print(new_deck.all_cards[0])
+# print(bottom_card)
+# for card_object in new_deck.all_cards:
+#     print(card_object)
