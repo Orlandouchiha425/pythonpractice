@@ -59,3 +59,66 @@ print(len(new_deck.all_cards))
 # print(bottom_card)
 # for card_object in new_deck.all_cards:
 #     print(card_object)
+
+class Player():
+    def __init__(self,name):
+        self.name = name
+        self.all_cards = []
+    def remove_one(self):
+        self.all_cards.pop(0)
+    def add_cards(self,new_cards):
+        if type(new_cards) == type([]):
+            self.all_cards.extend(new_cards)
+        else:
+            self.all_cards.append(new_cards)
+    def __str__(self):
+        return f'Player {self.name}:has {len(self.all_cards)} cards.'
+    
+new_player = Player('Orlando')
+new_player.add_cards(mycard)
+print(new_player)
+new_player.add_cards([mycard,mycard,mycard])
+print(new_player)
+print(new_player.all_cards[0])
+new_player.remove_one()
+print(new_player)
+
+
+
+#Game Setup 
+             ##Class
+player_one = Player('One')
+player_two = Player("Two")
+
+new_deck = Deck()
+new_deck.shuffle()
+
+for x in range(26):
+    player_one.add_cards(new_deck.deal_one())
+    player_two.add_cards(new_deck.deal_one())
+print(len(player_one.all_cards))
+
+game_on = True
+
+round_num = 0
+
+while game_on:
+    round_num +=1
+    print(f"Round {round_num}")
+    if len(player_one.add_cards)== 0:
+        print('Player One, Out of cards! Player Two Wins')
+        game_on = False
+        break
+
+    if len(player_one.add_cards)== 0:
+        print('Player Two, Out of cards! Player One Wins')
+        game_on = False
+        break
+
+
+    #Start a new Round
+    player_one_cards = []
+    player_one_cards.append(player_one.remove_one())
+    player_two_cards = []
+    player_two_cards.append(player_two.remove_one())
+
