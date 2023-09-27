@@ -1,4 +1,5 @@
 import random
+import pdb
 #this is a global variable, since is outside of a function
 values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 
             'Nine':9, 'Ten':10, 'Jack':11, 'Queen':12, 'King':13, 'Ace':14}
@@ -101,24 +102,72 @@ print(len(player_one.all_cards))
 game_on = True
 
 round_num = 0
-
 while game_on:
-    round_num +=1
+    
+    round_num += 1
     print(f"Round {round_num}")
-    if len(player_one.add_cards)== 0:
-        print('Player One, Out of cards! Player Two Wins')
+    
+    # Check to see if a player is out of cards:
+    if len(player_one.all_cards) == 0:
+        print("Player One out of cards! Game Over")
+        print("Player Two Wins!")
         game_on = False
         break
-
-    if len(player_one.add_cards)== 0:
-        print('Player Two, Out of cards! Player One Wins')
+        
+    if len(player_two.all_cards) == 0:
+        print("Player Two out of cards! Game Over")
+        print("Player One Wins!")
         game_on = False
         break
-
-
-    #Start a new Round
+    
+    # Otherwise, the game is still on!
+    
+    # Start a new round and reset current cards "on the table"
     player_one_cards = []
     player_one_cards.append(player_one.remove_one())
+    
     player_two_cards = []
     player_two_cards.append(player_two.remove_one())
+    
+    at_war = True
 
+    while at_war:
+        if len(player_one_cards) > 0 and len(player_two_cards) > 0:
+            if player_one_cards[-1].value > player_two_cards[-1].value:
+        # Player One gets the cards
+                player_one.add_cards(player_one_cards)
+                player_one.add_cards(player_two_cards)
+                at_war = False
+            elif player_one_cards[-1].value < player_two_cards[-1].value:
+        # Player Two gets the cards
+                player_two.add_cards(player_one_cards)
+                player_two.add_cards(player_two_cards)
+
+        # No Longer at "war", time for next round
+                at_war = False
+
+            else:
+                print('WAR!')
+            # This occurs when the cards are equal.
+            # We'll grab another card each and continue the current war.
+            
+            # First check to see if player has enough cards
+            
+            # Check to see if a player is out of cards:
+            if len(player_one.all_cards) < 5:
+                print("Player One unable to play war! Game Over at War")
+                print("Player Two Wins! Player One Loses!")
+                game_on = False
+                break
+
+            elif len(player_two.all_cards) < 5:
+                print("Player Two unable to play war! Game Over at War")
+                print("Player One Wins! Player One Loses!")
+                game_on = False
+                break
+            # Otherwise, we're still at war, so we'll add the next cards
+            else:
+                for num in range(5):
+                    player_one_cards.append(player_one.remove_one())
+                    player_two_cards.append(player_two.remove_one())
+        
